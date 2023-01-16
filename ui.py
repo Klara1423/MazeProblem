@@ -151,6 +151,19 @@ class MazeUI: #迷宫界面设计类
         修改了属性generate_buttom
             为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map方法（在下面）
             标签60、高24，位于(850,140)
+
+        建立了MazeUI的三个属性
+        text_generate
+            为一个window中的文本框
+            输入框宽150、高60，位于(760,170)
+            禁止输入
+        text_pathfinding
+            为一个window中的输入框
+            输入框宽60、高490，位于(760,250)
+            禁止输入
+        maze
+            为MazeMap类（在Generate.py中定义的）
+        
         
         """
     def generate_map(self):

@@ -4,8 +4,21 @@ from tkinter import ttk
 from PIL import ImageTk
 from tkinter import filedialog
 from solve import DFS, BFS, AStar
+"""
+导入了4个模块：
+Generate.py: 迷宫生成
 
-class MazeUI:
+solve.py:求解迷宫
+    
+tkinter: 图形化界面设计
+    ttk:界面
+    filedialog:对话框
+    
+PIL(pillow):图像处理
+    ImageTk:创捷和生成图像
+"""
+
+class MazeUI: #迷宫界面设计类
     def __init__(self) -> None:
         self.window = tk.Tk()
         self.window.title('迷宫生成与破解')
@@ -14,25 +27,61 @@ class MazeUI:
         self.window.iconbitmap('ico.ico')
         self.canvas = tk.Canvas(self.window, width=720, height=720, bg='black')
         self.canvas.place(width=720, height=720, x=20, y=20)
-        
+        """
+        建立了MazeUI的两个属性：
+        window
+            为一个窗口window
+            窗口标题为'迷宫生成与破解'
+            窗口大小为935*760
+            禁用了改变窗口大小
+            窗口图标为'ico.ico'  
+        acnvas
+            为一个window中的画布，宽720，高720，背景为黑色
+            画布位于(20,20)
+        """
         # 生成地图的宽
         self.label_x = tk.Label(self.window, text="x:", font=("宋体", 12))
         self.label_x.place(width=20, height=20, x=740, y=20)
         self.text_x = tk.Entry(self.window)
         self.text_x.place(width=60, height=20, x=760, y=22)
-        
+        """
+        建立了MazeUI的两个属性
+        label_x
+            为一个window中的标签，标签内容为"x:",字体为宋体，大小为12
+            标签宽20、高20，位于(740,20)
+        text_x
+            为一个window中的输入窗口
+            标签宽60、高20，位于(760,22)            
+        """
         # 生成地图的高
         self.label_y = tk.Label(self.window, text="y:", font=("宋体", 12))
         self.label_y.place(width=20, height=20, x=830, y=20)
         self.text_y = tk.Entry(self.window)
         self.text_y.place(width=60, height=20, x=850, y=22)
-
+        """
+        建立了MazeUI的两个属性
+        label_y
+            为一个window中的标签，标签内容为"y:",字体为宋体，大小为12
+            标签宽20、高20，位于(830,20)
+        text_y
+            为一个window中的输入框
+            输入框宽60、高20，位于(850,22)
+        """
         # 生成地图的算法
         xVariable = tk.StringVar()
         self.com_generate = ttk.Combobox(self.window, textvariable=xVariable)
         self.com_generate.place(width=60, height=22, x=760, y=52)
         self.com_generate["value"] = ("DFS", "PRIM")
-
+        """
+        新建了一个变量
+        xVarialbe
+            为一个StringVar类型的变量(多行文本)               
+        建立了MazeUI的一个属性
+        com_generate
+            为一个window中的下拉框，下拉框内容属性为xVarialbe变量的类型
+            输入框宽60、高22，位于(760,52)      
+            下拉框内容为"DFS", "PRIM"                    
+        """
         # 生成地图
         self.generate_buttom = tk.Button(self.window, text="生成地图", font=("宋体", 10), command=self.generate_map)
         self.generate_buttom.place(width=60, height=24, x=850, y=50)

@@ -17,13 +17,12 @@ tkinter: 图形化界面设计
 PIL(pillow):图像处理
     ImageTk:创捷和生成图像
 """
-
 class MazeUI: #迷宫界面设计类
     def __init__(self) -> None:
         self.window = tk.Tk()
         self.window.title('迷宫生成与破解')
         self.window.geometry('925x760')
-        self.window.resizable(0,0)
+        self.window.resizable(0, 0)
         self.window.iconbitmap('ico.ico')
         self.canvas = tk.Canvas(self.window, width=720, height=720, bg='black')
         self.canvas.place(width=720, height=720, x=20, y=20)
@@ -75,7 +74,8 @@ class MazeUI: #迷宫界面设计类
         """
         新建了一个变量
         xVarialbe
-            为一个StringVar类型的变量(多行文本)               
+            为一个StringVar类型的变量(多行文本)
+                           
         建立了MazeUI的一个属性
         com_generate
             为一个window中的下拉框，下拉框内容属性为xVarialbe变量的类型
@@ -90,21 +90,48 @@ class MazeUI: #迷宫界面设计类
         self.text_wall.place(width=60, height=20, x=760, y=82)
         self.wall_buttom = tk.Button(self.window, text="拆墙", font=("宋体", 10), command=self.dismantles_wall)
         self.wall_buttom.place(width=60, height=24, x=850, y=80)
-
+        """
+        建立了MazeUI的三个属性
+        generate_buttom
+            为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map方法（在下面）
+            标签60、高24，位于(850,50)
+        text_wall
+            为一个window中的输入框
+            输入框宽60、高20，位于(760,82)
+        wall_buttom
+            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall方法（在下面）
+            标签60、高24，位于(850,80)
+        """
         # 加载迷宫
         self.generate_buttom = tk.Button(self.window, text="加载迷宫", font=("宋体", 10), command=self.load_maze)
         self.generate_buttom.place(width=60, height=24, x=760, y=110)
-
+        """
+        修改了属性generate_buttom
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（在下面）
+            标签60、高24，位于(760,110)
+        """
         # 保存迷宫
         self.generate_buttom = tk.Button(self.window, text="保存迷宫", font=("宋体", 10), command=self.save_maze)
         self.generate_buttom.place(width=60, height=24, x=850, y=110)
-
-        # 生成地图的算法
+        """
+        修改了属性generate_buttom
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（在下面）
+            标签60、高24，位于(760,110)
+        """
+        # 自动寻路的算法
         xVariable = tk.StringVar()
         self.com_pathfinding = ttk.Combobox(self.window, textvariable=xVariable)
         self.com_pathfinding.place(width=60, height=22, x=760, y=140)
         self.com_pathfinding["value"] = ("DFS", "BFS", "AStar")
+        """
+        再次定义xVarialbe
+            为一个StringVar类型的变量(多行文本)
 
+        修改了属性属性com_generate
+            为一个window中的下拉框，下拉框内容属性为xVarialbe变量的类型
+            输入框宽60、高22，位置改为(760,140)      
+            下拉框内容为"DFS", "BFS", "AStar"                   
+        """
         # 自动寻路
         self.generate_buttom = tk.Button(self.window, text="自动寻路", font=("宋体", 10), command=self.solve_map)
         self.generate_buttom.place(width=60, height=24, x=850, y=140)
@@ -120,7 +147,12 @@ class MazeUI: #迷宫界面设计类
         self.maze = Generate.MazeMap()
 
         self.window.mainloop()
+        """
+        修改了属性generate_buttom
+            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map方法（在下面）
+            标签60、高24，位于(850,140)
         
+        """
     def generate_map(self):
         global img
         x, y = int(self.text_x.get()), int(self.text_y.get())

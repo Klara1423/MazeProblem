@@ -93,13 +93,13 @@ class MazeUI: #迷宫界面设计类
         """
         建立了MazeUI的三个属性
         generate_buttom
-            为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map方法（在下面）
+            为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map方法（生成地图，在下面）
             标签60、高24，位于(850,50)
         text_wall
             为一个window中的输入框
             输入框宽60、高20，位于(760,82)
         wall_buttom
-            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall方法（在下面）
+            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall方法（拆墙，在下面）
             标签60、高24，位于(850,80)
         """
         # 加载迷宫
@@ -107,7 +107,7 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom.place(width=60, height=24, x=760, y=110)
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（在下面）
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（加载迷宫，在下面）
             标签60、高24，位于(760,110)
         """
         # 保存迷宫
@@ -115,7 +115,7 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom.place(width=60, height=24, x=850, y=110)
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（在下面）
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（保存迷宫，在下面）
             标签60、高24，位于(760,110)
         """
         # 自动寻路的算法
@@ -149,24 +149,25 @@ class MazeUI: #迷宫界面设计类
         self.window.mainloop()
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map方法（在下面）
-            标签60、高24，位于(850,140)
+            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map方法（自动寻路，在下面）
+            按钮宽60、高24，位于(850,140)
 
-        建立了MazeUI的三个属性
+        新建了MazeUI的三个属性
         text_generate
             为一个window中的文本框
-            输入框宽150、高60，位于(760,170)
+            文本框宽150、高60，位于(760,170)
             禁止输入
         text_pathfinding
             为一个window中的输入框
-            输入框宽60、高490，位于(760,250)
+            文本框宽60、高490，位于(760,250)
             禁止输入
         maze
             为MazeMap类（在Generate.py中定义的）
         
+        使窗口可持续刷新，一直显示
         
         """
-    def generate_map(self):
+    def generate_map(self):# 生成地图方法
         global img
         x, y = int(self.text_x.get()), int(self.text_y.get())
         func = self.com_generate.get()
@@ -181,14 +182,14 @@ class MazeUI: #迷宫界面设计类
         self.text_generate.insert(tk.END, str)
         self.text_generate.config(state=tk.DISABLED)
 
-    def save_maze(self):
+    def save_maze(self):# 保存迷宫方法
         path_save = filedialog.asksaveasfilename(
             defaultextension='保存地图模型',
             filetypes=[("npy文件", ".npy")]
         )
         self.maze.save_map(path_save)
 
-    def load_maze(self):
+    def load_maze(self):# 加载迷宫方法
         global img
         maze_path = filedialog.askopenfilename(filetypes=(("npy files","*.npy"), ))
         self.maze.load_map(maze_path)
@@ -197,7 +198,7 @@ class MazeUI: #迷宫界面设计类
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
 
-    def solve_map(self):
+    def solve_map(self):# 自动寻路方法
         global img
         func = eval(self.com_pathfinding.get())(self.maze.get_map(), self.maze.start, self.maze.end)
         func.solve()
@@ -210,7 +211,7 @@ class MazeUI: #迷宫界面设计类
         self.text_pathfinding.insert(tk.END, str)
         self.text_pathfinding.config(state=tk.DISABLED)
 
-    def dismantles_wall(self):
+    def dismantles_wall(self):# 拆墙方法
         global img
         wall = int(self.text_wall.get())
         self.maze.random_dismantles_wall(wall)
@@ -221,3 +222,7 @@ class MazeUI: #迷宫界面设计类
 
 if __name__ == "__main__":
     ui = MazeUI()
+"""
+程序入口
+    根据MazeUI类创建了一个实例，并将其储存到变量ui里
+"""

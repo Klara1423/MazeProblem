@@ -27,7 +27,7 @@ class MazeUI: #迷宫界面设计类
         self.canvas = tk.Canvas(self.window, width=720, height=720, bg='black')
         self.canvas.place(width=720, height=720, x=20, y=20)
         """
-        建立了MazeUI的两个属性：
+        新建了MazeUI的两个属性：
         window
             为一个窗口window
             窗口标题为'迷宫生成与破解'
@@ -44,7 +44,7 @@ class MazeUI: #迷宫界面设计类
         self.text_x = tk.Entry(self.window)
         self.text_x.place(width=60, height=20, x=760, y=22)
         """
-        建立了MazeUI的两个属性
+        新建了MazeUI的两个属性
         label_x
             为一个window中的标签，标签内容为"x:",字体为宋体，大小为12
             标签宽20、高20，位于(740,20)
@@ -58,7 +58,7 @@ class MazeUI: #迷宫界面设计类
         self.text_y = tk.Entry(self.window)
         self.text_y.place(width=60, height=20, x=850, y=22)
         """
-        建立了MazeUI的两个属性
+        新建了MazeUI的两个属性
         label_y
             为一个window中的标签，标签内容为"y:",字体为宋体，大小为12
             标签宽20、高20，位于(830,20)
@@ -76,7 +76,7 @@ class MazeUI: #迷宫界面设计类
         xVarialbe
             为一个StringVar类型的变量(多行文本)
                            
-        建立了MazeUI的一个属性
+        新建了MazeUI的一个属性
         com_generate
             为一个window中的下拉框，下拉框内容属性为xVarialbe变量的类型
             输入框宽60、高22，位于(760,52)      
@@ -91,7 +91,7 @@ class MazeUI: #迷宫界面设计类
         self.wall_buttom = tk.Button(self.window, text="拆墙", font=("宋体", 10), command=self.dismantles_wall)
         self.wall_buttom.place(width=60, height=24, x=850, y=80)
         """
-        建立了MazeUI的三个属性
+        新建了MazeUI的三个属性
         generate_buttom
             为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map方法（生成地图，在下面）
             标签60、高24，位于(850,50)
@@ -181,14 +181,26 @@ class MazeUI: #迷宫界面设计类
         self.text_generate.delete(1.0, "end")
         self.text_generate.insert(tk.END, str)
         self.text_generate.config(state=tk.DISABLED)
-
+"""
+新建了一个全局变量
+    img
+    
+新建了五个变量
+    x
+    y
+    func
+    image
+    str
+"""
     def save_maze(self):# 保存迷宫方法
         path_save = filedialog.asksaveasfilename(
             defaultextension='保存地图模型',
             filetypes=[("npy文件", ".npy")]
         )
         self.maze.save_map(path_save)
-
+"""
+新建了一个元组filedialog.asksaveasfilename储存到了新变量path_save里
+"""
     def load_maze(self):# 加载迷宫方法
         global img
         maze_path = filedialog.askopenfilename(filetypes=(("npy files","*.npy"), ))
@@ -197,7 +209,15 @@ class MazeUI: #迷宫界面设计类
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
+"""
+再次定义img为全局变量，并进行了修改
 
+新建了一个变量
+    maze_path
+
+修改了变量
+    image
+"""
     def solve_map(self):# 自动寻路方法
         global img
         func = eval(self.com_pathfinding.get())(self.maze.get_map(), self.maze.start, self.maze.end)
@@ -210,7 +230,13 @@ class MazeUI: #迷宫界面设计类
         self.text_pathfinding.delete(1.0, "end")
         self.text_pathfinding.insert(tk.END, str)
         self.text_pathfinding.config(state=tk.DISABLED)
+"""
+再次定义img为全局变量，并进行了修改
 
+修改了变量
+    image
+    str
+"""
     def dismantles_wall(self):# 拆墙方法
         global img
         wall = int(self.text_wall.get())
@@ -219,7 +245,16 @@ class MazeUI: #迷宫界面设计类
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
+"""
+再次定义img为全局变量，并进行了修改
 
+新建了一个变量
+    wall
+
+修改了变量
+    image
+
+"""
 if __name__ == "__main__":
     ui = MazeUI()
 """

@@ -6,18 +6,44 @@ import random
 import numpy as np
 from PIL import Image
 from copy import deepcopy
+"""
+导入了5个模块：
+time: 时间处理
 
+random: 伪随机数生成
 
-class MazeMap:
+numpy: 快速处理数组
+
+PIL(pillow):图像处理
+    Image: 图像处理
+
+copy: 变量拷贝
+    deepcopy: 深拷贝，父对象、子对象都拷贝
+"""
+
+class MazeMap: #迷宫生成、导入、保存类
     def __init__(self):
         self._maze_map = None
         self.generate_time = 0
-
+    """
+    新建了MazeMap的两个属性：
+    _maze_map
+        一个空数组
+    generate_time
+    """
     def init_maze(self):
         self.start = np.array([0, 0])
         self.road = np.argwhere(self._maze_map == 0)
         self.end = self.road[np.argmax(np.sum(self.road * 2, axis=1))]
-
+    """
+    新建了MazeMap的两个属性：
+    start
+        一个int型的一维数组[0, 0]
+    road
+        数组self._maze_map中 = 0的元素的索引组成的新一维数组
+    end
+        数组self.road中索引为self.road中？？？？？？？？？？？？？？？？的元素
+    """
     def _generate_map(self, generate, size):
         self.generate_time = time.time()
         maze_map = None
@@ -153,3 +179,7 @@ if __name__ == "__main__":
     maze.generate("PRIM", (32, 32))
     maze.init_maze()
     maze.get_figure()
+"""
+程序入口
+    根据MazeMap类创建了一个实例，并将其储存到变量maze里
+"""

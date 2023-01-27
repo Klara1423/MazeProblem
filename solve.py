@@ -88,7 +88,7 @@ class BFS:
         self.wall = [self.start]
         self.run = True
         self.cost_time = 0
- 
+
     def solve(self):
         star_time = time.time()
         while self.run!=False:
@@ -165,7 +165,7 @@ class AStar:
         self.memory = {tuple(self.start.tolist()): None}
         self.run = True
         self.cost_time = 0
- 
+
     def solve(self):
         star_time = time.time()
         while self.run!=False:

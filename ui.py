@@ -6,14 +6,14 @@ from tkinter import filedialog
 from solve import DFS, BFS, AStar
 """
 导入了4个模块：
-Generate.py: 迷宫生成
+Generate.py: 迷宫生成、导入、保存
 
 solve.py: 求解迷宫
-    
+
 tkinter: 图形化界面设计
     ttk: 界面
     filedialog: 对话框
-    
+
 PIL(pillow): 图像处理
     ImageTk: 创捷和生成图像
 """
@@ -93,13 +93,13 @@ class MazeUI: #迷宫界面设计类
         """
         新建了MazeUI的三个属性
         generate_buttom
-            为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map方法（生成地图，在下面）
+            为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map行为（生成地图，在下面）
             标签60、高24，位于(850,50)
         text_wall
             为一个window中的输入框
             输入框宽60、高20，位于(760,82)
         wall_buttom
-            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall方法（拆墙，在下面）
+            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall行为（拆墙，在下面）
             标签60、高24，位于(850,80)
         """
         # 加载迷宫
@@ -107,7 +107,7 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom.place(width=60, height=24, x=760, y=110)
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（加载迷宫，在下面）
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze行为（加载迷宫，在下面）
             标签60、高24，位于(760,110)
         """
         # 保存迷宫
@@ -115,7 +115,7 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom.place(width=60, height=24, x=850, y=110)
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze方法（保存迷宫，在下面）
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze行为（保存迷宫，在下面）
             标签60、高24，位于(760,110)
         """
         # 自动寻路的算法
@@ -149,7 +149,7 @@ class MazeUI: #迷宫界面设计类
         self.window.mainloop()
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map方法（自动寻路，在下面）
+            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map行为（自动寻路，在下面）
             按钮宽60、高24，位于(850,140)
 
         新建了MazeUI的三个属性
@@ -162,12 +162,13 @@ class MazeUI: #迷宫界面设计类
             文本框宽60、高490，位于(760,250)
             禁止输入
         maze
-            为MazeMap类（在Generate.py中定义的）
+            根据MazeMap类创建的一个实例
         
         使窗口可持续刷新，一直显示
         
         """
-    def generate_map(self):# 生成地图方法
+
+    def generate_map(self):# 生成地图行为
         global img
         x, y = int(self.text_x.get()), int(self.text_y.get())
         func = self.com_generate.get()
@@ -182,19 +183,24 @@ class MazeUI: #迷宫界面设计类
         self.text_generate.insert(tk.END, str)
         self.text_generate.config(state=tk.DISABLED)
     """
-    新建了一个全局变量
-    img
+    新建了一个全局变量img
         
-    新建了五个变量
-    x
+    新建了两个变量x, y, func
         通过.get()方法，将从输入框text_x获取的值转换成整数，再传给变量x
-    y
         通过.get()方法，将从输入框text_y获取的值转换成整数，再传给变量y
-    func
         通过.get()方法，将从下拉框com_generate选择的值再传给变量func
+
+    属性maze执行generate行为和init_maze行为
+    generate
+        （生成地图，Generate.py中的MazeMap类）
+        fun -> generate,(x, y) -> size
+    init_maze
+        （初始化地图，Generate.py中的MazeMap类）
+        无参数
     image
     str
     """
+
     def save_maze(self):# 保存迷宫行为
         path_save = filedialog.asksaveasfilename(
             defaultextension='保存地图模型',
@@ -204,6 +210,7 @@ class MazeUI: #迷宫界面设计类
     """
     新建了一个元组filedialog.asksaveasfilename储存到了新变量path_save里
     """
+
     def load_maze(self):# 加载迷宫行为
         global img
         maze_path = filedialog.askopenfilename(filetypes=(("npy files","*.npy"), ))
@@ -221,6 +228,7 @@ class MazeUI: #迷宫界面设计类
     修改了变量
         image
     """
+
     def solve_map(self):# 自动寻路行为
         global img
         func = eval(self.com_pathfinding.get())(self.maze.get_map(), self.maze.start, self.maze.end)
@@ -240,6 +248,7 @@ class MazeUI: #迷宫界面设计类
         image
         str
     """
+
     def dismantles_wall(self):# 拆墙行为
         global img
         wall = int(self.text_wall.get())
@@ -258,9 +267,10 @@ class MazeUI: #迷宫界面设计类
         image
     
     """
+
 if __name__ == "__main__":
     ui = MazeUI()
-"""
-程序入口
-    根据MazeUI类创建了一个实例，并将其储存到变量ui里
-"""
+    """
+    程序入口
+        根据MazeUI类创建的一个实例
+    """

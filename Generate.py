@@ -28,24 +28,24 @@ class MazeMap: #迷宫生成、导入、保存类
     """
     新建了MazeMap的两个属性：
     _maze_map
-        一个空数组，用于记录地图
+        一个空数组，用于记录迷宫
     generate_time
         一个浮点数，用于记录时间
     """
-    def init_maze(self):# 初始化地图行为
+    def init_maze(self):# 初始化迷宫行为
         self.start = np.array([0, 0])
         self.road = np.argwhere(self._maze_map == 0)
         self.end = self.road[np.argmax(np.sum(self.road * 2, axis=1))]
     """
     新建了MazeMap的两个属性：
     start
-        一个int型的一维数组[0, 0]
+        一维数组[0, 0]，记录迷宫起点
     road
         数组self._maze_map中 = 0的元素的索引组成的新一维数组
     end
         数组self.road中索引为self.road中？？？？？？？？？？？？？？？？的元素
     """
-    def _generate_map(self, generate, size):# 生成地图行为1
+    def _generate_map(self, generate, size):# 生成迷宫行为1
         self.generate_time = time.time()
         maze_map = None
         if generate == "DFS":
@@ -60,7 +60,7 @@ class MazeMap: #迷宫生成、导入、保存类
 
     修改属性generate_time为当前的时间戳（time.time()返回值，浮点数，自1970年1月1日08:00:00AM到当前时刻之间的秒数UTC+8）
 
-    新建了一个变量maze_map并初始化
+    新建了一个变量maze_map并初始化（一个二维数组）
 
     如果参数generate的值是"DFS"，通过_DFS行为（DFS生成，在下面）修改变量maze_map
     如果参数generate的值是"PRIM"，通过_PRIM行为（PRIM生成，在下面）修改变量maze_map
@@ -69,7 +69,7 @@ class MazeMap: #迷宫生成、导入、保存类
 
     输出属性generate_time
 
-    返回变量maze_map
+    返回变量maze_map（二位数组）
     """
 
     def PRIM_det(self, maze, memory, size):
@@ -121,7 +121,6 @@ class MazeMap: #迷宫生成、导入、保存类
             self.PRIM_det(maze, memory, size)
         return self.PRIM2map(maze)
 
-    
     def _DFS(self, size):# DFS生成行为
         maze = np.empty((*size, 2), dtype=np.uint8)# (x, y, 2)
         maze[:, :, 0] = 1
@@ -139,25 +138,27 @@ class MazeMap: #迷宫生成、导入、保存类
         maze = maze[:, :, 0]
         return maze
     """
-    用方法np.empty生成了一个未初始化的三维数组maze，数组形状为(x, y, 2)，数据类型为8字节无符号整数，记录地图形状和访问状态
-    maze数组第0列修改为1，第1列修改为0
-    第0个二维数组的第一行反过来
+    用方法np.empty生成了一个未初始化的三维数组maze（当成一个元素都是一维数组的二维数组，x -> 行，y -> 列，2 -> 元素长度），数组形状为(x, y, 2)，数据类型为8字节无符号整数，记录迷宫形状和访问状态
+    maze数组所有元素修改为[1, 0]， 第一行第一列为[0, 1]（[]）
 
     新建了一个由二维数组构成的空列表memory，记录DFS状态（生成的路径）
 
     当列表memory长度大于为0时循环
-        新建了一个列表legal_direction，通过judge_direction行为进行了修改（可以继续生成的位置）
+        新建了一个列表legal_direction，通过judge_direction方法
+        进行了修改（可以继续生成的位置）
 
         如果列表legal_direction长度为0，删除列表memory最后一个元素（走投无路就往回退）
         否则
             新建一个变量new_index（一维数组），值为列表legal_direction中的随机一个元素（随机选一个可生成的位置）
-            将变量new_index添加到列表memory里
+            将变量new_index添加到列表memory里（选好了就走呗）
 
+    修改三维数组maze（只保留迷宫，删除状态，变成二维数组）
+    返回二维数组maze
     """
 
     @staticmethod
     # 静态方法：无slef参数,不需要实例即可调用，相当于封装在类里的的函数
-    def judge_direction(maze, index, size):
+    def judge_direction(maze, index, size):# 判断方向方法
         direction = np.array([[0, 1], [1, 0], [-1, 0], [0, -1]])
         legal_direction = []
         for item in direction:
@@ -200,10 +201,10 @@ class MazeMap: #迷宫生成、导入、保存类
     def save_map(self, save_path):
         np.save(save_path, self._maze_map)
 
-    def generate(self, generate, size):# 生成地图行为0
+    def generate(self, generate, size):# 生成迷宫行为0
         self._maze_map = self._generate_map(generate, size)
     """
-    通过_generate_map行为（生成地图1，在上面）修改了属性_maze_map
+    通过_generate_map行为（生成迷宫1，在上面）修改了属性_maze_map（二维数组）
     """
 
     def get_figure(self, figure_size=(720, 720)):
@@ -218,6 +219,11 @@ class MazeMap: #迷宫生成、导入、保存类
         maze_dis = Image.fromarray(maze_dis)
         image = maze_dis.resize(figure_size, Image.NEAREST)
         return image
+    """
+    新建一个变量maze，把_maze_map（之前储存迷宫的二维数组）复制过来
+    数组中等于0的元素改为255，等于1或2的元素改为0
+
+    """
 
     def random_dismantles_wall(self, n):
         while n > 0 and (self._maze_map > 0).sum() > n:

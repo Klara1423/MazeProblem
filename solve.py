@@ -19,7 +19,7 @@ class DFS:
         self.memory = [{"step": self.start, "dire": [0, 1]}]
         self.run = True
         self.cost_time = 0
- 
+
     def solve(self):
         star_time = time.time()
         while self.run!=False:

@@ -185,7 +185,7 @@ class MazeUI: #迷宫界面设计类
     """
     新建了一个全局变量img
         
-    新建了两个变量x, y, func
+    新建了三个变量x, y, func
         通过.get()方法，将从输入框text_x获取的值转换成整数，再传给变量x
         通过.get()方法，将从输入框text_y获取的值转换成整数，再传给变量y
         通过.get()方法，将从下拉框com_generate选择的值再传给变量func
@@ -197,7 +197,9 @@ class MazeUI: #迷宫界面设计类
     init_maze
         （初始化地图，Generate.py中的MazeMap类）
         无参数
-    image
+
+    新建了一个变量image执行get_figure行为
+
     str
     """
 
@@ -269,8 +271,4 @@ class MazeUI: #迷宫界面设计类
     """
 
 if __name__ == "__main__":
-    ui = MazeUI()
-    """
-    程序入口
-        根据MazeUI类创建的一个实例
-    """
+    ui = MazeUI()# 程序入口：根据MazeUI类创建的一个实例

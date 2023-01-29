@@ -32,6 +32,7 @@ class MazeMap: #迷宫生成、导入、保存类
     generate_time
         一个浮点数，用于记录时间
     """
+
     def init_maze(self):# 初始化迷宫行为
         self.start = np.array([0, 0])
         self.road = np.argwhere(self._maze_map == 0)
@@ -45,6 +46,7 @@ class MazeMap: #迷宫生成、导入、保存类
     end
         数组self.road中索引为self.road中？？？？？？？？？？？？？？？？的元素
     """
+
     def _generate_map(self, generate, size):# 生成迷宫行为1
         self.generate_time = time.time()
         maze_map = None
@@ -242,13 +244,10 @@ class MazeMap: #迷宫生成、导入、保存类
             y = random.randint(0, self._maze_map.shape[1]-1)
             if self._maze_map[x, y] > 0:
                 self._maze_map[x, y] = 0
-                n -= 1           
+                n -= 1
+
 if __name__ == "__main__":
     maze = MazeMap()
     maze.generate("PRIM", (32, 32))
     maze.init_maze()
     maze.get_figure()
-    """
-    程序入口
-        根据MazeMap类创建的一个实例
-    """

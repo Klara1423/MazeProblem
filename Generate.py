@@ -138,13 +138,13 @@ class MazeMap: #迷宫生成、导入、保存类
         maze = maze[:, :, 0]
         return maze
     """
-    用方法np.empty生成了一个未初始化的三维数组maze（当成一个元素都是一维数组的二维数组，x -> 行，y -> 列，2 -> 元素长度），数组形状为(x, y, 2)，数据类型为8字节无符号整数，记录迷宫形状和访问状态
-    maze数组所有元素修改为[1, 0]， 第一行第一列为[0, 1]（[]）
+    用方法np.empty()生成了一个未初始化的三维数组maze（当成一个元素都是一维数组的二维数组，x -> 行，y -> 列，2 -> 元素长度），数组形状为(x, y, 2)，数据类型为8字节无符号整数，记录迷宫形状和访问状态
+    maze数组所有元素修改为[1, 0]， 第一行第一列为[0, 1]（[迷宫形状，访问状态]）
 
     新建了一个由二维数组构成的空列表memory，记录DFS状态（生成的路径）
 
     当列表memory长度大于为0时循环
-        新建了一个列表legal_direction，通过judge_direction方法
+        新建了一个列表legal_direction，通过judge_direction()方法
         进行了修改（可以继续生成的位置）
 
         如果列表legal_direction长度为0，删除列表memory最后一个元素（走投无路就往回退）
@@ -207,7 +207,7 @@ class MazeMap: #迷宫生成、导入、保存类
     通过_generate_map行为（生成迷宫1，在上面）修改了属性_maze_map（二维数组）
     """
 
-    def get_figure(self, figure_size=(720, 720)):
+    def get_figure(self, figure_size=(720, 720)):# 转图片行为
         maze = deepcopy(self._maze_map)
         maze[maze == 0] = 255
         maze[maze == 1] = 0
@@ -221,8 +221,19 @@ class MazeMap: #迷宫生成、导入、保存类
         return image
     """
     新建一个变量maze，把_maze_map（之前储存迷宫的二维数组）复制过来
-    数组中等于0的元素改为255，等于1或2的元素改为0
+        数组中等于0的元素改为255，等于1或2的元素改为0
+        把起点和种终点对应的元素改为128
 
+    新建了一个变量maze_dis（就是加了个边框）
+        用方法np.zores()生成了一个初始化的二维数组maze_dis()，行和列在maze基础上+2，数据类型还是8字节无符号整数
+        把数组maze的值复制到maze_dis中间
+
+    通过Image.fromarray()方法把数组maze_dis转换成image图片
+
+    新建了一个变量image
+        图片maze_dis缩放成720*720传给image，采用最近邻法缩放（速度快但精度低）
+
+    返回image
     """
 
     def random_dismantles_wall(self, n):
@@ -231,8 +242,7 @@ class MazeMap: #迷宫生成、导入、保存类
             y = random.randint(0, self._maze_map.shape[1]-1)
             if self._maze_map[x, y] > 0:
                 self._maze_map[x, y] = 0
-                n -= 1
-
+                n -= 1           
 if __name__ == "__main__":
     maze = MazeMap()
     maze.generate("PRIM", (32, 32))

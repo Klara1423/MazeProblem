@@ -38,7 +38,7 @@ class MazeUI: #迷宫界面设计类
             为一个window中的画布，宽720，高720，背景为黑色
             画布位于(20,20)
         """
-        # 生成地图的宽
+        # 生成迷宫的宽
         self.label_x = tk.Label(self.window, text="x:", font=("宋体", 12))
         self.label_x.place(width=20, height=20, x=740, y=20)
         self.text_x = tk.Entry(self.window)
@@ -52,7 +52,7 @@ class MazeUI: #迷宫界面设计类
             为一个window中的输入窗口
             标签宽60、高20，位于(760,22)            
         """
-        # 生成地图的高
+        # 生成迷宫的高
         self.label_y = tk.Label(self.window, text="y:", font=("宋体", 12))
         self.label_y.place(width=20, height=20, x=830, y=20)
         self.text_y = tk.Entry(self.window)
@@ -66,7 +66,7 @@ class MazeUI: #迷宫界面设计类
             为一个window中的输入框
             输入框宽60、高20，位于(850,22)
         """
-        # 生成地图的算法
+        # 生成迷宫的算法
         xVariable = tk.StringVar()
         self.com_generate = ttk.Combobox(self.window, textvariable=xVariable)
         self.com_generate.place(width=60, height=22, x=760, y=52)
@@ -82,8 +82,8 @@ class MazeUI: #迷宫界面设计类
             输入框宽60、高22，位于(760,52)      
             下拉框选项为"DFS", "PRIM"                    
         """
-        # 生成地图
-        self.generate_buttom = tk.Button(self.window, text="生成地图", font=("宋体", 10), command=self.generate_map)
+        # 生成迷宫
+        self.generate_buttom = tk.Button(self.window, text="生成迷宫", font=("宋体", 10), command=self.generate_map)
         self.generate_buttom.place(width=60, height=24, x=850, y=50)
 
         self.text_wall = tk.Entry(self.window)
@@ -93,13 +93,13 @@ class MazeUI: #迷宫界面设计类
         """
         新建了MazeUI的三个属性
         generate_buttom
-            为一个window中的按钮，按钮内容为"生成地图"，字体为宋体，大小为10，按后执行generate_map行为（生成地图，在下面）
+            为一个window中的按钮，按钮内容为"生成迷宫"，字体为宋体，大小为10，按后执行generate_map()行为（生成迷宫，在下面）
             标签60、高24，位于(850,50)
         text_wall
             为一个window中的输入框
             输入框宽60、高20，位于(760,82)
         wall_buttom
-            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall行为（拆墙，在下面）
+            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall()行为（拆墙，在下面）
             标签60、高24，位于(850,80)
         """
         # 加载迷宫
@@ -107,7 +107,7 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom.place(width=60, height=24, x=760, y=110)
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze行为（加载迷宫，在下面）
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze()行为（加载迷宫，在下面）
             标签60、高24，位于(760,110)
         """
         # 保存迷宫
@@ -115,7 +115,7 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom.place(width=60, height=24, x=850, y=110)
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze行为（保存迷宫，在下面）
+            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze()行为（保存迷宫，在下面）
             标签60、高24，位于(760,110)
         """
         # 自动寻路的算法
@@ -149,16 +149,16 @@ class MazeUI: #迷宫界面设计类
         self.window.mainloop()
         """
         修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map行为（自动寻路，在下面）
+            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map()行为（自动寻路，在下面）
             按钮宽60、高24，位于(850,140)
 
         新建了MazeUI的三个属性
         text_generate
-            为一个window中的文本框
+            为一个window中的多行输入框
             文本框宽150、高60，位于(760,170)
             禁止输入
         text_pathfinding
-            为一个window中的输入框
+            为一个window中的多行输入框
             文本框宽60、高490，位于(760,250)
             禁止输入
         maze
@@ -168,7 +168,7 @@ class MazeUI: #迷宫界面设计类
         
         """
 
-    def generate_map(self):# 生成地图行为
+    def generate_map(self):# 生成迷宫行为
         global img
         x, y = int(self.text_x.get()), int(self.text_y.get())
         func = self.com_generate.get()
@@ -177,6 +177,7 @@ class MazeUI: #迷宫界面设计类
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
+
         self.text_generate.config(state=tk.NORMAL)
         str = "通过%s算法生成模型\n迷宫大小:%4dx%4d\n花费时间:%7.5fs\n"%(func, x, y, self.maze.generate_time)
         self.text_generate.delete(1.0, "end")
@@ -184,28 +185,29 @@ class MazeUI: #迷宫界面设计类
         self.text_generate.config(state=tk.DISABLED)
     """
     新建了一个全局变量img
-        
     新建了三个变量x, y, func
         通过.get()方法，将从输入框text_x获取的值转换成整数，再传给变量x
         通过.get()方法，将从输入框text_y获取的值转换成整数，再传给变量y
         通过.get()方法，将从下拉框com_generate选择的值再传给变量func
+    属性maze执行generate()行为和init_maze()行为
+        generate（生成迷宫，Generate.py中的MazeMap类，fun -> generate,(x, y) -> size）
+        init_maze（初始化迷宫，Generate.py中的MazeMap类，无参数）
 
-    属性maze执行generate行为和init_maze行为
-    generate
-        （生成地图，Generate.py中的MazeMap类）
-        fun -> generate,(x, y) -> size
-    init_maze
-        （初始化地图，Generate.py中的MazeMap类）
-        无参数
+    新建了一个变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
+    修改了一个变量img，将图片image导入img
+    修改了属性canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
 
-    新建了一个变量image执行get_figure行为
-
-    str
+    新建了一个变量str为一个字符串，内容略
+    修改了属性text_generate，
+        允许输入
+        清除多行输入框里的内容   
+        在输入框的内容末尾插入字符串str
+        禁止输入
     """
 
     def save_maze(self):# 保存迷宫行为
         path_save = filedialog.asksaveasfilename(
-            defaultextension='保存地图模型',
+            defaultextension='保存迷宫模型',
             filetypes=[("npy文件", ".npy")]
         )
         self.maze.save_map(path_save)
@@ -254,7 +256,7 @@ class MazeUI: #迷宫界面设计类
     def dismantles_wall(self):# 拆墙行为
         global img
         wall = int(self.text_wall.get())
-        self.maze.random_dismantles_wall(wall)
+        self.maze.random_dismantles_wall  (wall)
         self.maze.init_maze()
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)

@@ -27,27 +27,27 @@ class MazeMap: #迷宫生成、导入、保存类
         self.generate_time = 0
     """
     新建了MazeMap的两个属性：
-    _maze_map
+    self.self._maze_map
         一个空数组，用于记录迷宫
-    generate_time
+    self.generate_time
         一个浮点数，用于记录时间
     """
 
-    def init_maze(self):# 初始化迷宫行为
+    def init_maze(self):# 初始化行为
         self.start = np.array([0, 0])
         self.road = np.argwhere(self._maze_map == 0)
         self.end = self.road[np.argmax(np.sum(self.road * 2, axis=1))]
     """
     新建了MazeMap的两个属性：
-    start
+    self.start
         一维数组[0, 0]，记录迷宫起点
-    road
+    self.road
         数组self._maze_map中 = 0的元素的索引组成的新一维数组
-    end
+    self.end
         数组self.road中索引为self.road中？？？？？？？？？？？？？？？？的元素
     """
 
-    def _generate_map(self, generate, size):# 生成迷宫行为1
+    def _generate_map(self, generate, size):# 生成行为1
         self.generate_time = time.time()
         maze_map = None
         if generate == "DFS":
@@ -60,16 +60,16 @@ class MazeMap: #迷宫生成、导入、保存类
     """
     两个参数generate（字符串，将从下拉框com_generate选择的值）, size（元组,(x, y)）
 
-    修改属性generate_time为当前的时间戳（time.time()返回值，浮点数，自1970年1月1日08:00:00AM到当前时刻之间的秒数UTC+8）
+    修改属性self.generate_time为当前的时间戳（time.time()返回值，浮点数，自1970年1月1日08:00:00AM到当前时刻之间的秒数UTC+8）
 
     新建了一个变量maze_map并初始化（一个二维数组）
 
-    如果参数generate的值是"DFS"，通过_DFS行为（DFS生成，在下面）修改变量maze_map
-    如果参数generate的值是"PRIM"，通过_PRIM行为（PRIM生成，在下面）修改变量maze_map
+    如果参数generate的值是"DFS"，通过_DFS()行为（DFS生成，在下面）修改变量maze_map
+    如果参数generate的值是"PRIM"，通过_PRIM()行为（PRIM生成，在下面）修改变量maze_map
 
-    修改属性generate_time为当前的时间戳与上次的差值（记录花费时间）
+    修改属性self.generate_time为当前的时间戳与上次的差值（记录花费时间）
 
-    输出属性generate_time
+    输出属性self.generate_time
 
     返回变量maze_map（二位数组）
     """
@@ -194,19 +194,28 @@ class MazeMap: #迷宫生成、导入、保存类
     返回列表legal_direction
     """
 
-    def load_map(self, path):
+    def load_map(self, path):# 打开行为
         self._maze_map = np.load(path)
+    """
+        通过np.load()函数修改属性self._maze_map ，改为从路径（参数path）打开的文件
+    """
 
-    def get_map(self):
+    def get_map(self):# 获取行为
         return self._maze_map
-    
-    def save_map(self, save_path):
-        np.save(save_path, self._maze_map)
+    """
+    返回属性self._maze_map（二维数组）
+    """
 
-    def generate(self, generate, size):# 生成迷宫行为0
+    def save_map(self, save_path):#保存行为
+        np.save(save_path, self._maze_map)
+    """
+    通过np.save()函数，保存数组self._maze_map，文件名为参数save_path
+    """
+
+    def generate(self, generate, size):# 生成行为0
         self._maze_map = self._generate_map(generate, size)
     """
-    通过_generate_map行为（生成迷宫1，在上面）修改了属性_maze_map（二维数组）
+    通过_generate_map()行为（生成1，在上面）修改了self._maze_map（二维数组）
     """
 
     def get_figure(self, figure_size=(720, 720)):# 转图片行为
@@ -230,7 +239,7 @@ class MazeMap: #迷宫生成、导入、保存类
         用方法np.zores()生成了一个初始化的二维数组maze_dis()，行和列在maze基础上+2，数据类型还是8字节无符号整数
         把数组maze的值复制到maze_dis中间
 
-    通过Image.fromarray()方法把数组maze_dis转换成image图片
+    通过Image.fromarray()方法把数组maze_dis转换成image图片（灰度图像，R = G = B,(0,255)，白到黑）
 
     新建了一个变量image
         图片maze_dis缩放成720*720传给image，采用最近邻法缩放（速度快但精度低）
@@ -238,16 +247,22 @@ class MazeMap: #迷宫生成、导入、保存类
     返回image
     """
 
-    def random_dismantles_wall(self, n):
+    def random_dismantles_wall(self, n):# 拆墙行为 
         while n > 0 and (self._maze_map > 0).sum() > n:
             x = random.randint(0, self._maze_map.shape[0]-1)
             y = random.randint(0, self._maze_map.shape[1]-1)
             if self._maze_map[x, y] > 0:
                 self._maze_map[x, y] = 0
                 n -= 1
+    """
+    n > 0 或 _maze_map中 > 0的元素的个数 > n 时循环 
+        从_maze_map随机找一个元素，如果这个元素的值 > 0，把它改成0同时n的值-1
+
+    """
 
 if __name__ == "__main__":
     maze = MazeMap()
     maze.generate("PRIM", (32, 32))
     maze.init_maze()
     maze.get_figure()
+    #用于局部功能测试的,在模型运行中并不会被调用

@@ -29,14 +29,14 @@ class MazeUI: #迷宫界面设计类
         self.canvas.place(width=720, height=720, x=20, y=20)
         """
         新建了MazeUI的两个属性：
-        window
-            为一个窗口window
+        self.window
+            为一个窗口
             窗口标题为'迷宫生成与破解'
             窗口大小为935*760
             禁用了改变窗口大小
             窗口图标为'ico.ico'  
-        acnvas
-            为一个window中的画布，宽720，高720，背景为黑色
+        self.acnvas
+            为窗口self.window中的一个画布，宽720，高720，背景为黑色
             画布位于(20,20)
         """
 
@@ -47,11 +47,11 @@ class MazeUI: #迷宫界面设计类
         self.text_x.place(width=60, height=20, x=760, y=22)
         """
         新建了MazeUI的两个属性
-        label_x
-            为一个window中的标签，标签内容为"x:",字体为宋体，大小为12
+        self.label_x
+            为窗口self.window中的一个标签，标签内容为"x:",字体为宋体，大小为12
             标签宽20、高20，位于(740,20)
-        text_x
-            为一个window中的输入框
+        self.text_x
+            为窗口self.window中的一个输入框
             标签宽60、高20，位于(760,22)            
         """
 
@@ -62,11 +62,11 @@ class MazeUI: #迷宫界面设计类
         self.text_y.place(width=60, height=20, x=850, y=22)
         """
         新建了MazeUI的两个属性
-        label_y
-            为一个window中的标签，标签内容为"y:",字体为宋体，大小为12
+        self.label_y
+            为窗口self.window中的一个标签，标签内容为"y:",字体为宋体，大小为12
             标签宽20、高20，位于(830,20)
-        text_y
-            为一个window中的输入框
+        self.text_y
+            为窗口self.window中的一个输入框
             输入框宽60、高20，位于(850,22)
         """
 
@@ -83,12 +83,12 @@ class MazeUI: #迷宫界面设计类
             为一个StringVar类型的变量(多行文本)
 
         新建了MazeUI的两个属性
-        com_generate
-            为一个window中的下拉框，下拉框内容属性为xVarialbe变量的类型
+        self.com_generate
+            为窗口self.window中的一个下拉框，下拉框内容属性为xVarialbe变量的类型
             输入框宽60、高22，位于(760,52)      
             下拉框选项为"DFS", "PRIM"  
-        generate_buttom
-            为一个window中的按钮，按钮内容为"生成迷宫"，字体为宋体，大小为10，按后执行generate_map()行为（生成迷宫，在下面）
+        self.generate_buttom
+            为窗口self.window中的一个按钮，按钮内容为"生成迷宫"，字体为宋体，大小为10，按后执行generate_map()行为（生成迷宫，在下面）
             标签60、高24，位于(850,50)                  
         """
 
@@ -99,11 +99,11 @@ class MazeUI: #迷宫界面设计类
         self.wall_buttom.place(width=60, height=24, x=850, y=80)
         """
         新建了MazeUI的两个属性
-        text_wall
-            为一个window中的输入框
+        self.text_wall
+            为窗口self.window中的一个输入框
             输入框宽60、高20，位于(760,82)
-        wall_buttom
-            为一个window中的按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall()行为（拆墙，在下面）
+        self.wall_buttom
+            为窗口self.window中的一个按钮，按钮内容为"拆墙"，字体为宋体，大小为10，按后执行dismantles_wall()行为（拆墙，在下面）
             标签60、高24，位于(850,80)
         """
 
@@ -111,8 +111,8 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom = tk.Button(self.window, text="加载迷宫", font=("宋体", 10), command=self.load_maze)
         self.generate_buttom.place(width=60, height=24, x=760, y=110)
         """
-        修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze()行为（加载迷宫，在下面）
+        修改了属性self.generate_buttom
+            为窗口self.window中的一个按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze()行为（加载迷宫，在下面）
             标签60、高24，位于(760,110)
         """
 
@@ -120,8 +120,8 @@ class MazeUI: #迷宫界面设计类
         self.generate_buttom = tk.Button(self.window, text="保存迷宫", font=("宋体", 10), command=self.save_maze)
         self.generate_buttom.place(width=60, height=24, x=850, y=110)
         """
-        修改了属性generate_buttom
-            为一个window中的按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze()行为（保存迷宫，在下面）
+        修改了属性self.generate_buttom
+            为窗口self.window中的一个按钮，按钮内容改为"加载迷宫"，字体为宋体，大小为10，按后改为执行load_maze()行为（保存迷宫，在下面）
             标签60、高24，位于(760,110)
         """
 
@@ -137,12 +137,12 @@ class MazeUI: #迷宫界面设计类
             为一个StringVar类型的变量(多行文本)
 
         修改了两个属性
-        com_generate
-            为一个window中的下拉框，下拉框内容属性为xVarialbe变量的类型
+        self.com_generate
+            为窗口self.window中的一个下拉框，下拉框内容属性为xVarialbe变量的类型
             输入框宽60、高22，位置改为(760,140)      
             下拉框选项为"DFS", "BFS", "AStar" 
-        generate_buttom
-            为一个window中的按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map()行为（自动寻路，在下面）
+        self.generate_buttom
+            为窗口self.window中的一个按钮，按钮内容改为"自动寻路"，字体为宋体，大小为10，按后改为执行solve_map()行为（自动寻路，在下面）
             按钮宽60、高24，位于(850,140)                  
         """
 
@@ -155,12 +155,12 @@ class MazeUI: #迷宫界面设计类
         self.text_pathfinding.config(state=tk.DISABLED)
         """
         新建了MazeUI的三个属性
-        text_generate
-            为一个window中的多行输入框
+        self.text_generate
+            为窗口self.window中的一个多行输入框
             文本框宽150、高60，位于(760,170)
             禁止输入
-        text_pathfinding
-            为一个window中的多行输入框
+        self.text_pathfinding
+            为窗口self.window中的一个多行输入框
             文本框宽60、高490，位于(760,250)
         """
 
@@ -190,19 +190,19 @@ class MazeUI: #迷宫界面设计类
     """
     新建了一个全局变量img
     新建了三个变量x, y, func
-        通过.get()方法，将从输入框text_x获取的值转换成整数，再传给变量x
-        通过.get()方法，将从输入框text_y获取的值转换成整数，再传给变量y
-        通过.get()方法，将从下拉框com_generate选择的值再传给变量func
-    属性maze执行generate()行为和init_maze()行为
-        generate（生成迷宫，Generate.py中的MazeMap类，fun -> generate,(x, y) -> size）
-        init_maze（初始化迷宫，Generate.py中的MazeMap类，无参数）
+        通过get()方法，将从输入框text_x获取的值转换成整数，再传给变量x
+        通过get()方法，将从输入框text_y获取的值转换成整数，再传给变量y
+        通过get()方法，将从下拉框com_generate选择的值再传给变量func
+    属性self.maze执行generate()行为和init_maze()行为
+        generate()（生成，Generate.py中的MazeMap类，fun -> generate,(x, y) -> size）
+        init_maze()（初始化，Generate.py中的MazeMap类，无参数）
 
-    新建了一个变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
-    修改了一个变量img，将图片image导入img
-    修改了属性canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
+    新建了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
+    修改了变量img，将图片image导入img
+    修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
 
     新建了一个变量str为一个字符串，内容略
-    修改了属性text_generate，
+    修改了属性self.text_generate，
         允许输入
         清除多行输入框里的内容   
         在输入框的内容末尾插入字符串str
@@ -211,12 +211,17 @@ class MazeUI: #迷宫界面设计类
 
     def save_maze(self):# 保存迷宫行为
         path_save = filedialog.asksaveasfilename(
-            defaultextension='保存迷宫模型',
+            initialfile='保存迷宫模型',
             filetypes=[("npy文件", ".npy")]
         )
         self.maze.save_map(path_save)
     """
-    新建了一个元组filedialog.asksaveasfilename储存到了新变量path_save里
+    新建了一个变量path_save
+        为filedialog.asksaveasfilename()函数（文件保存对话框）返回的文件名，文件名默认是"保存迷宫模型"，文件类型为npy文件
+        
+    属性self.maze执行save_map()行为
+        save_map()（保存，Generate.py中的MazeMap类，path_save -> save_path）
+        
     """
 
     def load_maze(self):# 加载迷宫行为
@@ -228,13 +233,18 @@ class MazeUI: #迷宫界面设计类
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
     """
-    再次定义img为全局变量，并进行了修改
+    再次声明img为全局变量
     
-    新建了一个变量
-        maze_path
-    
-    修改了变量
-        image
+    新建了一个变量maze_path
+        为filedialog.askopenfilename()函数（文件打开对话框）返回的路径，文件类型为npy文件
+
+    属性self.maze执行load_map()行为和init_maze()行为
+        load_map()（打开，Generate.py中的MazeMap类，maze_path -> path）
+        init_maze()（初始化，Generate.py中的MazeMap类，无参数）
+
+    修改了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
+    修改了变量img，将图片image导入img
+    修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
     """
 
     def solve_map(self):# 自动寻路行为
@@ -250,8 +260,8 @@ class MazeUI: #迷宫界面设计类
         self.text_pathfinding.insert(tk.END, str)
         self.text_pathfinding.config(state=tk.DISABLED)
     """
-    再次定义img为全局变量
-    
+    再次声明img为全局变量
+
     修改了变量
         image
         str
@@ -260,21 +270,22 @@ class MazeUI: #迷宫界面设计类
     def dismantles_wall(self):# 拆墙行为
         global img
         wall = int(self.text_wall.get())
-        self.maze.random_dismantles_wall  (wall)
+        self.maze.random_dismantles_wall(wall)
         self.maze.init_maze()
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
     """
-    再次定义img为全局变量，并进行了修改
-    
-    新建了一个变量
-        wall
-    
-    修改了变量
-        image
-    
+    再次声明img为全局变量
+    通过get()方法，将从输入框text_wall获取的值传给变量wall
+    属性self.maze执行random_dismantles_wall()行为和init_maze()行为
+        random_dismantles_wall()（拆墙，Generate.py中的MazeMap类，wall -> n）
+        init_maze()（初始化，Generate.py中的MazeMap类，无参数）
+
+    修改了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
+    修改了变量img，将图片image导入img
+    修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
     """
 
-if __name__ == "__main__":
-    ui = MazeUI()# 程序入口：根据MazeUI类创建的一个实例
+if __name__ == "__main__":# 程序入口
+    ui = MazeUI()# 根据MazeUI类创建的一个实例

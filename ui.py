@@ -177,6 +177,7 @@ class MazeUI: #迷宫界面设计类
         x, y = int(self.text_x.get()), int(self.text_y.get())
         func = self.com_generate.get()
         self.maze.generate(func, (x, y))
+
         self.maze.init_maze()
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
@@ -189,14 +190,14 @@ class MazeUI: #迷宫界面设计类
         self.text_generate.config(state=tk.DISABLED)
     """
     新建了一个全局变量img
-    新建了三个变量x, y, func
-        通过get()方法，将从输入框text_x获取的值转换成整数，再传给变量x
-        通过get()方法，将从输入框text_y获取的值转换成整数，再传给变量y
-        通过get()方法，将从下拉框com_generate选择的值再传给变量func
-    属性self.maze执行generate()行为和init_maze()行为
-        generate()（生成，Generate.py中的MazeMap类，fun -> generate,(x, y) -> size）
-        init_maze()（初始化，Generate.py中的MazeMap类，无参数）
 
+    新建了三个变量x, y, func
+        通过get()方法，将从输入框self.text_x获取的值转换成整数，再传给变量x
+        通过get()方法，将从输入框self.text_y获取的值转换成整数，再传给变量y
+        通过get()方法，将从下拉框self.com_generate选择的值再传给变量func
+    属性self.maze执行generate()行为（生成，Generate.py中的MazeMap类，fun -> generate,(x, y) -> size）
+    
+    属性self.maze执行init_maze()行为（初始化起点终点，Generate.py中的MazeMap类，无参数）
     新建了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
     修改了变量img，将图片image导入img
     修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
@@ -228,20 +229,19 @@ class MazeUI: #迷宫界面设计类
         global img
         maze_path = filedialog.askopenfilename(filetypes=(("npy files","*.npy"), ))
         self.maze.load_map(maze_path)
+
         self.maze.init_maze()
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
     """
     再次声明img为全局变量
-    
+
     新建了一个变量maze_path
         为filedialog.askopenfilename()函数（文件打开对话框）返回的路径，文件类型为npy文件
+    属性self.maze执行load_map()行为（打开，Generate.py中的MazeMap类，maze_path -> path）
 
-    属性self.maze执行load_map()行为和init_maze()行为
-        load_map()（打开，Generate.py中的MazeMap类，maze_path -> path）
-        init_maze()（初始化，Generate.py中的MazeMap类，无参数）
-
+    属性self.maze执行init_maze()行为（初始化起点终点，Generate.py中的MazeMap类，无参数）
     修改了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
     修改了变量img，将图片image导入img
     修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
@@ -251,9 +251,11 @@ class MazeUI: #迷宫界面设计类
         global img
         func = eval(self.com_pathfinding.get())(self.maze.get_map(), self.maze.start, self.maze.end)
         func.solve()
+
         image = func.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
+
         self.text_pathfinding.config(state=tk.NORMAL)
         str = func.get_info()
         self.text_pathfinding.delete(1.0, "end")
@@ -262,26 +264,40 @@ class MazeUI: #迷宫界面设计类
     """
     再次声明img为全局变量
 
-    修改了变量
-        image
-        str
+    eval(self.com_pathfinding.get())（通过eval()函数把从下拉框self.com_pathfinding选择的字符串转换成可调用的对象）
+    根据 eval(self.com_pathfinding.get())类创建了一个实例func
+    func执行solve()行为（求解，slove.py中的eval(self.com_pathfinding.get())类，无参数）
+
+    属性self.maze执行init_maze()行为（初始化起点终点，Generate.py中的MazeMap类，无参数）
+    修改了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
+    修改了变量img，将图片image导入img
+    修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处
+
+    新建了一个变量str为一个字符串，内容为func执行get_info()行为的返回值
+    （整理文本，slove.py中的eval(self.com_pathfinding.get())类，无参数）
+    修改了属性text_pathfinding，
+        允许输入
+        清除多行输入框里的内容
+        在输入框的内容末尾插入字符串str
+        禁止输入
     """
 
     def dismantles_wall(self):# 拆墙行为
         global img
         wall = int(self.text_wall.get())
         self.maze.random_dismantles_wall(wall)
+
         self.maze.init_maze()
         image = self.maze.get_figure()
         img = ImageTk.PhotoImage(image=image)
         self.canvas.create_image(360, 360, anchor='center', image=img)
     """
     再次声明img为全局变量
-    通过get()方法，将从输入框text_wall获取的值传给变量wall
-    属性self.maze执行random_dismantles_wall()行为和init_maze()行为
-        random_dismantles_wall()（拆墙，Generate.py中的MazeMap类，wall -> n）
-        init_maze()（初始化，Generate.py中的MazeMap类，无参数）
 
+    通过get()方法，将从输入框text_wall获取的值传给变量wall
+    属性self.maze执行random_dismantles_wall()行为（拆墙，Generate.py中的MazeMap类，wall -> n）
+
+    属性self.maze执行init_maze()行为（初始化起点终点，Generate.py中的MazeMap类，无参数）
     修改了变量image，为一张图片，为get_figure()行为（转图片，Generate.py中的MazeMap类，无参数）的返回值
     修改了变量img，将图片image导入img
     修改了属性self.canvas，在画布canvas中插入了一张图片img， 图片中心位于画布(360, 360)处

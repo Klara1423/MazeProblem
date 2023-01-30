@@ -6,9 +6,23 @@ import queue
 import numpy as np
 from PIL import Image
 from copy import deepcopy
+"""
+导入了5个模块：
+time: 时间处理
+
+queue: 队列
+
+numpy: 快速处理数组
+
+PIL(pillow):图像处理
+    Image: 图像处理
+
+copy: 变量拷贝
+    deepcopy: 深拷贝，父对象、子对象都拷贝
+"""
 
 
-class DFS:
+class DFS:# DFS求解类
     def __init__(self, maze, start, end) -> None:
         self.maze = maze
         self.h, self.w = maze.shape
@@ -19,8 +33,11 @@ class DFS:
         self.memory = [{"step": self.start, "dire": [0, 1]}]
         self.run = True
         self.cost_time = 0
+    """
+    三个参数 maze（二维数组，迷宫）, start（一维数组，起点）, end（一维数组，终点）
+    """
 
-    def solve(self):
+    def solve(self):# 求解行为
         star_time = time.time()
         while self.run!=False:
             self.step()
@@ -66,7 +83,7 @@ class DFS:
         image = maze_dis.resize(figure_size, Image.NEAREST)
         return image
 
-    def get_info(self):
+    def get_info(self):# 整理文本行为
         cost_time = self.cost_time
         exploration = self.flag.sum()
         path_length = len(self.memory)
@@ -76,7 +93,7 @@ class DFS:
         return info
 
 
-class BFS:
+class BFS:# BFS求解类
     def __init__(self, maze, start, end) -> None:
         self.maze = maze
         self.h, self.w = maze.shape
@@ -152,7 +169,7 @@ class BFS:
         return info
 
 
-class AStar:
+class AStar:# Astar求解类
     def __init__(self, maze, start, end) -> None:
         self.maze = maze
         self.h, self.w = maze.shape

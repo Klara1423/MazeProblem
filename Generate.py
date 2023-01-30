@@ -33,18 +33,19 @@ class MazeMap: #迷宫生成、导入、保存类
         一个浮点数，用于记录时间
     """
 
-    def init_maze(self):# 初始化行为
+    def init_maze(self):# 初始化起点终点行为
         self.start = np.array([0, 0])
+
         self.road = np.argwhere(self._maze_map == 0)
         self.end = self.road[np.argmax(np.sum(self.road * 2, axis=1))]
     """
-    新建了MazeMap的两个属性：
-    self.start
-        一维数组[0, 0]，记录迷宫起点
-    self.road
-        数组self._maze_map中 = 0的元素的索引组成的新一维数组
-    self.end
-        数组self.road中索引为self.road中？？？？？？？？？？？？？？？？的元素
+    新建了MazeMap的两个属性： 
+    self.start 
+        一维数组[0, 0]，记录迷宫起点 
+    self.road 
+        由数组self._maze_map中 = 0的元素的索引组成的新二维数组 
+    self.end 
+        一维数组，（记录迷宫终点我们不确定终点在哪里，但肯定是右下角，所以只要横纵横坐标的和最大且不是墙的坐标就是终点）
     """
 
     def _generate_map(self, generate, size):# 生成行为1
@@ -69,7 +70,7 @@ class MazeMap: #迷宫生成、导入、保存类
 
     修改属性self.generate_time为当前的时间戳与上次的差值（记录花费时间）
 
-    输出属性self.generate_time
+    在终端输出属性self.generate_time（测试用，主要是验证算法复杂度的）
 
     返回变量maze_map（二位数组）
     """
@@ -181,7 +182,7 @@ class MazeMap: #迷宫生成、导入、保存类
     """
     三个参数maze（三维数组）, index（列表memory最后一个元素，一维数组）, size（元组，(x, y)）
 
-    新建了一个二维数组direction，每一行代表一个方向
+    新建了一个二维数组direction，每一行代表一个方向（下，左，右，上）
 
     新建了一个空列表legal_direction
 

@@ -45,7 +45,8 @@ class MazeMap: #迷宫生成、导入、保存类
     self.road 
         由数组self._maze_map中 = 0的元素的索引组成的新二维数组 
     self.end 
-        一维数组，（记录迷宫终点我们不确定终点在哪里，但肯定是右下角，所以只要横纵横坐标的和最大且不是墙的坐标就是终点）
+        一维数组，（记录迷宫终点我们不确定终点在哪里，但肯定是右下角，
+                    所以只要横纵横坐标的和最大且不是墙的坐标就是终点）
     """
 
     def _generate_map(self, generate, size):# 生成行为1
@@ -61,7 +62,8 @@ class MazeMap: #迷宫生成、导入、保存类
     """
     两个参数generate（字符串，将从下拉框com_generate选择的值）, size（元组,(x, y)）
 
-    修改属性self.generate_time为当前的时间戳（time.time()返回值，浮点数，自1970年1月1日08:00:00AM到当前时刻之间的秒数UTC+8）
+    修改属性self.generate_time为当前的时间戳
+        （time.time()返回值，浮点数，自1970年1月1日08:00:00AM到当前时刻之间的秒数UTC+8）
 
     新建了一个变量maze_map并初始化（一个二维数组）
 
@@ -129,7 +131,9 @@ class MazeMap: #迷宫生成、导入、保存类
         maze[:, :, 0] = 1
         maze[:, :, 1] = 0
         maze[0][0][0], maze[0][0][1] = 0, 1
+
         memory = [np.array([0, 0])]
+
         while len(memory) > 0:
             legal_direction = self.judge_direction(maze, memory[-1], size)
             if len(legal_direction) == 0:
@@ -138,10 +142,13 @@ class MazeMap: #迷宫生成、导入、保存类
                 new_index = legal_direction[random.randint(0, len(legal_direction)-1)]
                 memory.append(new_index)
                 maze[new_index[0], new_index[1]] = np.array([0, 1])
+
         maze = maze[:, :, 0]
         return maze
     """
-    用方法np.empty()生成了一个未初始化的三维数组maze（当成一个元素都是一维数组的二维数组，x -> 行，y -> 列，2 -> 元素长度），数组形状为(x, y, 2)，数据类型为8字节无符号整数，记录迷宫形状和访问状态
+    用方法np.empty()生成了一个未初始化的三维数组maze
+        （当成一个元素都是一维数组的二维数组，x -> 行，y -> 列，2 -> 元素长度）
+        数组形状为(x, y, 2)，数据类型为8字节无符号整数，记录迷宫形状和访问状态
     maze数组所有元素修改为[1, 0]， 第一行第一列为[0, 1]（[迷宫形状，访问状态]）
 
     新建了一个由二维数组构成的空列表memory，记录DFS状态（生成的路径）
@@ -152,8 +159,10 @@ class MazeMap: #迷宫生成、导入、保存类
 
         如果列表legal_direction长度为0，删除列表memory最后一个元素（走投无路就往回退）
         否则
-            新建一个变量new_index（一维数组），值为列表legal_direction中的随机一个元素（随机选一个可生成的位置）
+            新建一个变量new_index（一维数组），
+            值为列表legal_direction中的随机一个元素（随机选一个可生成的位置）
             将变量new_index添加到列表memory里（选好了就走呗）
+
 
     修改三维数组maze（只保留迷宫，删除状态，变成二维数组）
     返回二维数组maze
@@ -164,12 +173,14 @@ class MazeMap: #迷宫生成、导入、保存类
     def judge_direction(maze, index, size):# 判断方向方法
         direction = np.array([[0, 1], [1, 0], [-1, 0], [0, -1]])
         legal_direction = []
+
         for item in direction:
             new_index = index + item
             if not (0 <= new_index[0] < size[0] and 0 <= new_index[1] < size[1]):
                 continue
             if maze[new_index[0], new_index[1], 1] == 1:
                 continue
+
             pass_value = 0
             for dire in direction:
                 temp_index = new_index + dire
@@ -177,20 +188,25 @@ class MazeMap: #迷宫生成、导入、保存类
             if pass_value < 3:
                 maze[new_index[0], new_index[1], 1] = 1
                 continue
+
             legal_direction.append(new_index)
         return legal_direction
     """
     三个参数maze（三维数组）, index（列表memory最后一个元素，一维数组）, size（元组，(x, y)）
 
     新建了一个二维数组direction，每一行代表一个方向（下，左，右，上）
-
-    新建了一个空列表legal_direction
+    新建了一个空列表legal_direction（记录最后的选择的位置）
 
     循环遍历列表direction
-        新建了一个一维数组new_index，值为new_index + item
+        新建了一个一维数组new_index，值为new_index + item（记录移动后的位置）
+        如果新位置超出迷宫范围，或者已经是访问过了，直接进行下一轮循环
 
-
-
+        新建了一个变量pass_value并初始化
+        循环遍历列表direction
+            新建了一个一维数组temp_index，值为tempnew_index + dire（再看看周围）
+            pass_value记录墙的数量（边界也算墙）
+        如果pass_value < 3，移动后的位置确定，maze对应的状态改为1（已访问），并直接进入下一轮循环
+        
     列表egal_direction添加一个元素new_index（一维数组）
     返回列表legal_direction
     """
@@ -236,11 +252,13 @@ class MazeMap: #迷宫生成、导入、保存类
         数组中等于0的元素改为255，等于1或2的元素改为0
         把起点和种终点对应的元素改为128
 
-    新建了一个变量maze_dis（就是加了个边框）
-        用方法np.zores()生成了一个初始化的二维数组maze_dis()，行和列在maze基础上+2，数据类型还是8字节无符号整数
-        把数组maze的值复制到maze_dis中间
+    新建了一个变量maze_dis（就是加了黑色个边框）
+        用方法np.zores()生成了一个初始化的二维数组maze_dis()，
+            行和列在maze基础上+2，数据类型还是8字节无符号整数
+        数组maze_dis的切片[1:-1, 1:-1]（中间部分）等于数组maze
 
-    通过Image.fromarray()方法把数组maze_dis转换成image图片（灰度图像，R = G = B,(0,255)，白到黑）
+    通过Image.fromarray()方法把数组maze_dis转换成image图片
+        （灰度图像，R = G = B,(0,255)，黑到白）
 
     新建了一个变量image
         图片maze_dis缩放成720*720传给image，采用最近邻法缩放（速度快但精度低）

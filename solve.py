@@ -35,6 +35,17 @@ class DFS:# DFS求解类
         self.cost_time = 0
     """
     三个参数 maze（二维数组，迷宫）, start（一维数组，起点）, end（一维数组，终点）
+    新建了一堆属性
+    self.maze 为参数迷宫maze
+    self.h 为迷宫高
+    self.w 为迷宫宽
+    self.start 为参数起点
+    self.end 为参数终点
+    self.flag 和maze shape一样的空数组
+    self.direction 二维数组，每一行代表一个方向（下，左，右，上）
+    self.memory 为一个字典，有两个键值对，目前分别为起点和起点元素
+    self.run = True
+    self.cost_time 记录花费时间
     """
 
     def solve(self):# 求解行为
@@ -42,6 +53,11 @@ class DFS:# DFS求解类
         while self.run!=False:
             self.step()
         self.cost_time = time.time() - star_time
+    """
+        新建变量star_time记录开始时间
+        当属性self.run!=False时进行循环，执行step()行为
+        属性self.cost_time通过记录结束时间在相减，得到执行时间
+    """
 
     def step(self):
         index = self.memory[-1]["step"]
@@ -53,7 +69,9 @@ class DFS:# DFS求解类
             self.memory[-1]["dire"].pop()
             dires = self._get_dire(new_index)
             self.memory.append({"step": new_index, "dire": dires})
-
+    """
+    
+    """    
     def _get_dire(self, index):
         dires = []
         for dire in range(len(self.direction)):
@@ -91,7 +109,18 @@ class DFS:# DFS求解类
         # memory = ["(%3d,%3d)"%(item["step"][0], item["step"][1]) for item in self.memory]
         # info += ">".join(memory)
         return info
+    """
+    新建了四个变量
+    cost_time
+        值为属性self.cost_time的值
+    exploration
 
+    path_length
+
+    info
+        字符串，内容略
+    返回字符串info
+    """
 
 class BFS:# BFS求解类
     def __init__(self, maze, start, end) -> None:

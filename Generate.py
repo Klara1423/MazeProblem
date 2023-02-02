@@ -51,11 +51,13 @@ class MazeMap: #迷宫生成、导入、保存类
 
     def _generate_map(self, generate, size):# 生成行为1
         self.generate_time = time.time()
+        
         maze_map = None
         if generate == "DFS":
             maze_map = self._DFS(size)
         elif generate == "PRIM":
             maze_map = self._PRIM(size)
+
         self.generate_time = time.time() - self.generate_time
         print(self.generate_time)
         return maze_map

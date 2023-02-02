@@ -41,9 +41,9 @@ class DFS:# DFS求解类
     self.w 为迷宫宽
     self.start 为参数起点
     self.end 为参数终点
-    self.flag 和maze shape一样的空数组
+    self.flag 和maze shape一样的空数组，记录搜索过的路线
     self.direction 二维数组，每一行代表一个方向（下，左，右，上）
-    self.memory 为一个字典，有两个键值对，目前分别为起点和起点元素
+    self.memory 为一个字典，有两个键值对，（坐标和方向）
     self.run = True
     self.cost_time 记录花费时间
     """
@@ -70,7 +70,12 @@ class DFS:# DFS求解类
             dires = self._get_dire(new_index)
             self.memory.append({"step": new_index, "dire": dires})
     """
-    
+    新建了一个变量index，存字典最后一位的"step"对应的值（一维数组，坐标）
+    如果当前坐标没有方向的时候就回溯
+    否则
+        新建了一个变量new_index，存加了方向的新坐标
+        新坐标访问过，就换一个方向
+        在字典里添加新的坐标和状态
     """    
     def _get_dire(self, index):
         dires = []
@@ -84,7 +89,9 @@ class DFS:# DFS求解类
                     continue
                 dires.append(dire)
         return dires
-
+    """
+    判断方向用的。。。
+    """
     def get_figure(self, figure_size=(720, 720)):
         maze = deepcopy(self.maze)
         maze[self.flag == 1] = 196
@@ -100,6 +107,25 @@ class DFS:# DFS求解类
         maze_dis = Image.fromarray(maze_dis)
         image = maze_dis.resize(figure_size, Image.NEAREST)
         return image
+    """
+    新建一个变量maze，把self.maze（储存迷宫的二维数组）复制过来
+        之前访问的元素改为196，通过循环字典存的路线元素改为64
+        数组中等于0的元素改为255，等于1或2的元素改为0
+        把起点和种终点对应的元素改为128
+
+    新建了一个变量maze_dis（就是加了黑色个边框）
+        用方法np.zores()生成了一个初始化的二维数组maze_dis()，
+            行和列在maze基础上+2，数据类型还是8字节无符号整数
+        数组maze_dis的切片[1:-1, 1:-1]（中间部分）等于数组maze
+
+    通过Image.fromarray()方法把数组maze_dis转换成image图片
+        （灰度图像，R = G = B,(0,255)，黑到白）
+
+    新建了一个变量image
+        图片maze_dis缩放成720*720传给image，采用最近邻法缩放（速度快但精度低）
+
+    返回image
+    """
 
     def get_info(self):# 整理文本行为
         cost_time = self.cost_time
